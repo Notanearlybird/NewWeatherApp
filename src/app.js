@@ -52,6 +52,7 @@ next7.innerHTML = `${day7}`;
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
+  celsiusTemp = response.data.main.temp;
   let cityElement = document.querySelector("#city");
   cityElement.innerHTML = response.data.name;
   let descriptionElement = document.querySelector("#description");
@@ -90,3 +91,14 @@ function handleSubmit(event) {
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 search("New York");
+
+function showFtemp(event) {
+  event.preventDefault();
+  let fahrenheitTemperature = (celsiusTemp * 9) / 5 + 32;
+  let tempElem = document.querySelector("#temperature");
+  tempElem.innerHTML = fahrenheitTemperature;
+}
+let Flink = document.querySelector("#CtoF");
+Flink.addEventListener("click", showFtemp);
+
+let celsiusTemp = null;
