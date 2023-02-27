@@ -98,7 +98,14 @@ function showFtemp(event) {
   let tempElem = document.querySelector("#temperature");
   tempElem.innerHTML = fahrenheitTemperature;
 }
+function showCtemp(event) {
+  event.preventDefault();
+  let tempElem = document.querySelector("#temperature");
+  tempElem.innerHTML = celsiusTemp;
+}
 let Flink = document.querySelector("#CtoF");
 Flink.addEventListener("click", showFtemp);
 
 let celsiusTemp = null;
+let Clink = document.querySelector("#Celsius");
+Clink.addEventListener("click", showCtemp);
