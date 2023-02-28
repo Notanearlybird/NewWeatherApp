@@ -10,18 +10,13 @@ let week = [
   "Saturday",
 ];
 let day = week[now.getDay()];
-let day2 = week[now.getDay() + 1];
-let day3 = week[now.getDay() + 2];
-let day4 = week[now.getDay() + 3];
-let day5 = week[now.getDay() + 4];
-let day6 = week[now.getDay() + 5];
-let day7 = week[now.getDay() + 6];
-console.log(day2);
-console.log(day3);
-console.log(day4);
-console.log(day5);
-console.log(day6);
-console.log(day7);
+let day2 = week[day0 + 1];
+let day3 = week[day0 + 2];
+let day4 = week[day0 + 3];
+let day5 = week[day0 + 4];
+let day6 = week[day0 + 5];
+let day7 = week[day0 + 6];
+
 let hours = now.getHours();
 let minutes = now.getMinutes();
 if (minutes < 10) {
@@ -36,18 +31,18 @@ let time = document.querySelector("#time");
 time.innerHTML = `${timeNow}`;
 let today = document.querySelector("#day");
 today.innerHTML = `${day}`;
-let tomorrow = document.querySelector("#next");
-tomorrow.innerHTML = `${day2}`;
-let next3 = document.querySelector("#next2");
-next3.innerHTML = `${day3}`;
-let next4 = document.querySelector("#next3");
-next4.innerHTML = `${day4}`;
-let next5 = document.querySelector("#next4");
-next5.innerHTML = `${day5}`;
-let next6 = document.querySelector("#next5");
-next6.innerHTML = `${day6}`;
-let next7 = document.querySelector("#next6");
-next7.innerHTML = `${day7}`;
+let next = document.querySelector("#next");
+next.innerHTML = `${day2}`;
+let next2 = document.querySelector("#next2");
+next2.innerHTML = `${day3}`;
+let next3 = document.querySelector("#next3");
+next3.innerHTML = `${day4}`;
+let next4 = document.querySelector("#next4");
+next4.innerHTML = `${day5}`;
+let next5 = document.querySelector("#next5");
+next5.innerHTML = `${day6}`;
+let next6 = document.querySelector("#next6");
+next6.innerHTML = `${day7}`;
 
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
