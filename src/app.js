@@ -44,6 +44,16 @@ next5.innerHTML = `${day6}`;
 let next6 = document.querySelector("#next6");
 next6.innerHTML = `${day7}`;
 
+function getForecast(coordinates) {
+  console.log(coordinates);
+  let apikeyForecast = "ot4d0ae9450339eb25164b5a104c010f";
+  let apiURL = `https://api.shecodes.io/weather/v1/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&key=${apikeyForecast}&units=metric`;
+  console.log(apiURL);
+  axios.get(apiURL).then(displayForecast);
+}
+//let apiURLtest = `https://api.shecodes.io/weather/v1/forecast?lat=38.71667&lon=-9.13333&key=ot4d0ae9450339eb25164b5a104c010f&units=metric`;
+//console.log(apiURLtest);
+
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(response.data.main.temp);
@@ -68,6 +78,8 @@ function displayTemperature(response) {
     `http://openweathermap.org/img/wn/${response.data.weather[0].description}@2x.png`
   );
   displayForecast();
+
+  getForecast(response.data.coord);
 }
 
 function search(city) {
@@ -106,7 +118,8 @@ let celsiusTemp = null;
 let Clink = document.querySelector("#Celsius");
 Clink.addEventListener("click", showCtemp);
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastEl = document.querySelector("#nextWeek");
   forecastEl.innerHTML = "Next week forecast";
   let Wdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
