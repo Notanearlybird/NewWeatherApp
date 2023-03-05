@@ -67,6 +67,7 @@ function displayTemperature(response) {
     "alt",
     `http://openweathermap.org/img/wn/${response.data.weather[0].description}@2x.png`
   );
+  displayForecast();
 }
 
 function search(city) {
@@ -104,3 +105,23 @@ Flink.addEventListener("click", showFtemp);
 let celsiusTemp = null;
 let Clink = document.querySelector("#Celsius");
 Clink.addEventListener("click", showCtemp);
+
+function displayForecast() {
+  let forecastEl = document.querySelector("#nextWeek");
+  forecastEl.innerHTML = "Next week forecast";
+  let Wdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+  let forecastHTML = `<div class="row">`;
+  Wdays.forEach(function (day) {
+    forecastHTML =
+      forecastHTML +
+      `<div class="col-2">
+            <div class="week" id="next">${day} :</div>
+            <img src="src/icons8-cloud1.png" alt="" id="icon2"/>
+            <div class="MaxMin">15 14</div>
+          </div>`;
+  });
+  forecastHTML = forecastHTML + `</div>`;
+  forecastEl.innerHTML = forecastHTML;
+  console.log(forecastHTML);
+}
+console.log(displayForecast);
