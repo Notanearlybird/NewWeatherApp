@@ -46,7 +46,7 @@ next6.innerHTML = `${day7}`;
 
 function getForecast(coordinates) {
   console.log(coordinates);
-  let apikeyForecast = "ot4d0ae9450339eb25164b5a104c010f";
+  let apikeyForecast = "29ed6c2e07ee4b1b2511b41b59e67e20";
   let apiURL = `https://api.shecodes.io/weather/v1/forecast?lat=${coordinates.lat}&lon=${coordinates.lon}&key=${apikeyForecast}&units=metric`;
   console.log(apiURL);
   axios.get(apiURL).then(displayForecast);
@@ -62,8 +62,6 @@ function displayTemperature(response) {
   cityElement.innerHTML = response.data.name;
   let descriptionElement = document.querySelector("#description");
   descriptionElement.innerHTML = response.data.weather[0].description;
-  humidity;
-  window;
   let humidityElement = document.querySelector("#humidity");
   humidityElement.innerHTML = response.data.main.humidity;
   let windElement = document.querySelector("#wind");
@@ -77,15 +75,17 @@ function displayTemperature(response) {
     "alt",
     `http://openweathermap.org/img/wn/${response.data.weather[0].description}@2x.png`
   );
+
   displayForecast();
 
   getForecast(response.data.coord);
 }
 
 function search(city) {
-  let apiKey = "d416967554f86a78aa9c4db5cf091c8c";
+  let apiKey = "229ed6c2e07ee4b1b2511b41b59e67e20";
   //let apiUrl = `http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=${apiKey}`;
   //let apiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&appid=${apiKey}`;
+  //let apiUrl = `http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   console.log(apiUrl);
   axios.get(apiUrl).then(displayTemperature);
@@ -118,19 +118,35 @@ let celsiusTemp = null;
 let Clink = document.querySelector("#Celsius");
 Clink.addEventListener("click", showCtemp);
 
+function formatDate(timestamp) {
+  let date = new Date(timestamp * 1000);
+  let day = date.getDay();
+  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  return days[day];
+}
 function displayForecast(response) {
-  console.log(response.data.daily);
+  console.log(response.data);
+  let forecast = response.data.daily;
   let forecastEl = document.querySelector("#nextWeek");
   forecastEl.innerHTML = "Next week forecast";
   let Wdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
   let forecastHTML = `<div class="row">`;
-  Wdays.forEach(function (day) {
+  forecast.forEach(function (forecastDay) {
     forecastHTML =
       forecastHTML +
       `<div class="col-2">
-            <div class="week" id="next">${day} :</div>
-            <img src="src/icons8-cloud1.png" alt="" id="icon2"/>
-            <div class="MaxMin">15 14</div>
+            <div class="week" id="next">${forecastDay.dt}:</div>
+            <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+              forecastDay.icon_url
+            }.png" alt="" id="icon2"/>
+            <div class="MaxMin"> 
+            <span class ="forecast-min"> ${Math.round(
+              forecastDay.temperature.minimum
+            )}°</span> 
+            <span class ="forecast-max">${Math.round(
+              forecastDay.temperature.maximum
+            )}° </span>
+           </div>
           </div>`;
   });
   forecastHTML = forecastHTML + `</div>`;
