@@ -44,6 +44,9 @@ a:link {
   margin-left: 25px;
   margin-bottom: 5px;
 }
+.iconForecast {
+  font-size: 12px;
+}
 .wrapper {
   max-width: 600px;
   margin: 30px auto;
