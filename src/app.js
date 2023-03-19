@@ -16,7 +16,8 @@ let day4 = week[day0 + 3];
 let day5 = week[day0 + 4];
 let day6 = week[day0 + 5];
 let day7 = week[day0 + 6];
-
+console.log(day7);
+//shows current time
 let hours = now.getHours();
 let minutes = now.getMinutes();
 if (minutes < 10) {
@@ -27,21 +28,23 @@ if (hours < 10) {
 }
 timeNow = `${hours}:${minutes}`;
 console.log(timeNow);
+
 let time = document.querySelector("#time");
 time.innerHTML = `${timeNow}`;
-let today = document.querySelector("#day");
+//
+let today = document.querySelector("#day1");
 today.innerHTML = `${day}`;
-let next = document.querySelector("#next");
-next.innerHTML = `${day2}`;
-let next2 = document.querySelector("#next2");
+let next = document.querySelector("#day2");
+next.innerHTML = `${week[day0 + 1]}`;
+let next2 = document.querySelector("#day3");
 next2.innerHTML = `${day3}`;
-let next3 = document.querySelector("#next3");
+let next3 = document.querySelector("#day4");
 next3.innerHTML = `${day4}`;
-let next4 = document.querySelector("#next4");
+let next4 = document.querySelector("#day5");
 next4.innerHTML = `${day5}`;
-let next5 = document.querySelector("#next5");
+let next5 = document.querySelector("#day6");
 next5.innerHTML = `${day6}`;
-let next6 = document.querySelector("#next6");
+let next6 = document.querySelector("#day7");
 next6.innerHTML = `${day7}`;
 
 function getForecast(coordinates) {
@@ -51,8 +54,6 @@ function getForecast(coordinates) {
   console.log(apiURL);
   axios.get(apiURL).then(displayForecast);
 }
-//let apiURLtest = `https://api.shecodes.io/weather/v1/forecast?lat=38.71667&lon=-9.13333&key=ot4d0ae9450339eb25164b5a104c010f&units=metric`;
-//console.log(apiURLtest);
 
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
@@ -80,9 +81,6 @@ function displayTemperature(response) {
 
 function search(city) {
   let apiKey = "f5029b784306910c19746e40c14d6cd3";
-  //let apiUrl = `http://api.openweathermap.org/data/2.5/forecast?id=524901&appid=${apiKey}`;
-  //let apiUrl = `http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lon}&appid=${apiKey}`;
-  //let apiUrl = `http://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid=${apiKey}&units=metric`;
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   console.log(apiUrl);
   axios.get(apiUrl).then(displayTemperature);
@@ -115,27 +113,33 @@ let celsiusTemp = null;
 let Clink = document.querySelector("#Celsius");
 Clink.addEventListener("click", showCtemp);
 
-function formatDate(timestamp) {
+function formatDay(timestamp) {
   let date = new Date(timestamp * 1000);
-  let day = date.getDay();
-  let days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  return days[day];
+  let currentDay = date.getDay();
+  let days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  return days[currentDay];
 }
+
 function displayForecast(response) {
   console.log(response.data);
   let forecast = response.data.daily;
   let forecastEl = document.querySelector("#nextWeek");
   forecastEl.innerHTML = "Next week forecast";
   let Wdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri"];
+  console.log(Wdays);
   let forecastHTML = `<div class="row">`;
-  forecast.forEach(function (forecastDay) {
-    forecastHTML =
-      forecastHTML +
-      `<div class="col-2">
-            <div class="week" id="next">${forecastDay.dt}:</div>
-            <img src="http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
-              forecastDay.icon_url
-            }.png" alt="" id="icon2"/>
+  forecast.forEach(function (forecastDay, index) {
+    if (index < 5) {
+      forecastHTML =
+        forecastHTML +
+        `<div class="col-2">
+            <div class="week" id="next">${formatDay(forecastDay.time)}:</div>
+            <img src="icon_url": "http://shecodes-assets.s3.amazonaws.com/api/weather/icons/${
+              forecastDay.condition.icon
+            }.png" 
+            alt=${forecastDay.condition.description}
+            width="42"/>
+           
             <div class="MaxMin"> 
             <span class ="forecast-min"> ${Math.round(
               forecastDay.temperature.minimum
@@ -145,6 +149,7 @@ function displayForecast(response) {
             )}° </span>
            </div>
           </div>`;
+    }
   });
   forecastHTML = forecastHTML + `</div>`;
   forecastEl.innerHTML = forecastHTML;
